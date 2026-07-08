@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 class="logo-name">💸~ExpenseFlow~💸</h1>
+      <div class="theme">🌙</div>
+    </header>
+    <section>
+      <div class="components">
+        <button class="Balance">💰Balance<br /><strong>₹0</strong></button>
+        <button class="Income">📈Income</button>
+        <button class="Expense">📈Expense</button>
+        <button class="Savings">💵Savings</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="functions">
+        <button class="Add-Transaction">+ Add Transaction</button>
+        <div class="search">
+          <input type="text" placeholder="Search" />
+          <button class="s-icon">🔍</button>
+        </div>
+        <select class="filter">
+          <option value="Filter" selected>FILTER</option>
+          <option value="Food">🍔FOOD</option>
+          <option value="Transport">🚗TRANSPORT</option>
+          <option value="Shopping">🛒 SHOPPINGS</option>
+          <option value="Bills">💡BILLS</option>
+          <option value="Education">📚EDUCATION</option>
+          <option value="Healthcare">🏥HEALTHCARE</option>
+          <option value="Salary">💼SALARY</option>
+        </select>
+        <select class="sort">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="highest">Highest Amount</option>
+          <option value="lowest">Lowest Amount</option>
+        </select>
+      </div>
+    </section>
+    <section calss="transactions">
+      <h2>Transaction History</h2>
+      <div class="transaction-history"></div>
+      <div class="empty">No Transactions Yet 💸</div>
+    </section>
+
+    <section class="details-card"></section>
+
+    <div class="modal">
+      <div class="modal-content">
+        <button class="close-btn">✖</button>
+        <h2>Add Transaction</h2>
+
+        <input type="number" placeholder="Amount" class="amount" />
+
+        <select class="type">
+          <option value="" selected disabled>Select Type</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+
+        <select class="category">
+          <option value="" selected disabled>Select Category</option>
+          <option value="Food">🍔FOOD</option>
+          <option value="Transport">🚗TRANSPORT</option>
+          <option value="Shopping">🛒 SHOPPINGS</option>
+          <option value="Bills">💡BILLS</option>
+          <option value="Education">📚EDUCATION</option>
+          <option value="Healthcare">🏥HEALTHCARE</option>
+          <option value="Salary">💼SALARY</option>
+        </select>
+        <input type="date" class="date" />
+        <input type="text" placeholder="Description" class="discription" />
+
+        <button class="save-btn">Save</button>
+      </div>
+    </div>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
