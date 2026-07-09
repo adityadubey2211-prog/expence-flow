@@ -14,20 +14,45 @@ const descriptionInput = document.querySelector(".discription");
 const saveBtn = document.querySelector(".save-btn");
 const transactionHistory = document.querySelector(".transaction-history");
 const empty = document.querySelector(".empty");
+let SavingGoal = 0;
 let editid = null;
 let transactions = [];
+document.addEventListener('click', (event) => {
+        if(detailsCard.contains(event.target)){
+            return;
+        }
+        else if(balanceBtn.contains(event.target)){
+            return;
+        }
+        else if(incomebtn.contains(event.target)){
+            return;
+        }
+        else if(savingbtn.contains(event.target)){
+            return;
+        }
+        else if(expencebtn.contains(event.target)){
+            return;
+        }
+        else{
+            detailsCard.classList.remove("active");
+        }
+});
 AddTransactionbtn.addEventListener('click', ShowModal);
 balanceBtn.addEventListener('click', function(){
     ShowCard(1);
+    updatebalance();
 });
 incomebtn.addEventListener('click', function(){
     ShowCard(2);
+    updateincome();
 });
 expencebtn.addEventListener('click', function(){
     ShowCard(3);
+    updateExpense();
 });
 savingbtn.addEventListener('click', function(){
-    ShowCard(4)
+    ShowCard(4);
+    updateSaving();
 });
 function ShowCard(a){
     
@@ -98,20 +123,24 @@ function ShowCard(a){
         detailsCard.classList.add("active");
         detailsCard.innerHTML = `
         <h2>💵 Savings Details</h2>
-    
+
         <div class="info">
             <span>Total Savings</span>
             <strong>₹0</strong>
         </div>
-    
+        
         <div class="info">
             <span>Savings Rate</span>
             <strong>0%</strong>
         </div>
-    
-        <div class="info">
+        
+        <div class="info goal-box">
             <span>Goal</span>
-            <strong>₹0</strong>
+        
+            <div class="goal-right">
+                <strong class="goal-amount">₹0</strong>
+                <button class="edit-goal">✏️</button>
+            </div>
         </div>
         `;
     }
@@ -190,7 +219,8 @@ function renderTransaction(){
      empty.style.display = "none";
      transactions.forEach((transaction) => {
         const card = document.createElement("div");
-        card.classList.add(("transaction-card"));
+        ca
+        rd.classList.add(("transaction-card"));
         card.innerHTML = `
         <div class="card-top">
            <div class="left">
@@ -219,6 +249,7 @@ function renderTransaction(){
         });
         transactionHistory.appendChild(card);
      })
+     updatebalance();
 
 }
 function editing (id){
@@ -240,4 +271,141 @@ function deleteTrans(id){
     });
 
     renderTransaction();
+}
+function updatebalance(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currBalance = totalIncome - totalExpense;
+    detailsCard.innerHTML =
+    `<h2>💰 Balance Details</h2>
+    
+        <div class="info">
+            <span>Current Balance</span>
+            <strong>₹${currBalance}</strong>
+        </div>
+    
+        <div class="info">
+            <span>Total Income</span>
+            <strong>₹${totalIncome}</strong>
+        </div>
+    
+        <div class="info">
+            <span>Total Expense</span>
+            <strong>₹${totalExpense}</strong>
+        </div>
+        `;
+}
+function updateincome(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currIncome = totalIncome;
+        detailsCard.innerHTML =`
+        <h2>📈 Income Details</h2>
+    
+        <div class="info">
+            <span>Total Income</span>
+            <strong>₹${currIncome}</strong>
+        </div>
+    
+        <div class="info">
+            <span>Last Income</span>
+            <strong>₹${currIncome}</strong>
+        </div>
+    
+        <div class="info">
+            <span>Transactions</span>
+            <strong>${currIncome}</strong>
+        </div>
+        `;
+}
+function updateExpense(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currExpense = totalExpense;
+    detailsCard.innerHTML = `
+        <h2>📉 Expense Details</h2>
+       
+        <div class="info">
+            <span>Total Expense</span>
+            <strong>₹${currExpense}</strong>
+        </div>
+       
+        <div class="info">
+            <span>Last Expense</span>
+            <strong>₹${currExpense}</strong>
+        </div>
+       
+        <div class="info">
+            <span>Transactions</span>
+            <strong>${currExpense}</strong>
+        </div>
+        `;
+
+}
+function updateSaving(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currSavings = totalIncome - totalExpense;
+    const rate = (currSavings/totalIncome) * 100;
+    detailsCard.innerHTML = `
+        <h2>💵 Savings Details</h2>
+
+        <div class="info">
+            <span>Total Savings</span>
+            <strong>₹${currSavings}</strong>
+        </div>
+        
+        <div class="info">
+            <span>Savings Rate</span>
+            <strong>${rate}%</strong>
+        </div>
+        
+        <div class="info goal-box">
+            <span>Goal</span>
+        
+            <div class="goal-right">
+                <strong class="goal-amount">₹${SavingGoal}</strong>
+                <button class="edit-goal">✏️</button>
+            </div>
+        </div>
+        `;
+        const editGoalBtn = document.querySelector(".edit-goal");
+        editGoalBtn.addEventListener('click', () => {
+             console.log("clicked");
+             SavingGoal = Number(prompt('enter your goal'));
+             updateSaving();
+       });
+
 }

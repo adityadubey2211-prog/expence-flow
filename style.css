@@ -455,3 +455,34 @@ header{
     border-radius:15px;
     background:#0F172A;
 }
+/* ======================
+  || GOAL BOX ||
+====================== */
+.goal-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.goal-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.edit-goal{
+    width:36px;
+    height:36px;
+    border:none;
+    border-radius:10px;
+    background:#3B82F6;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s ease;
+}
+
+.edit-goal:hover{
+    background:#2563EB;
+    transform:scale(1.08);
+}
