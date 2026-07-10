@@ -15,8 +15,22 @@ const saveBtn = document.querySelector(".save-btn");
 const transactionHistory = document.querySelector(".transaction-history");
 const empty = document.querySelector(".empty");
 let SavingGoal = 0;
+const goal = localStorage.getItem("SavingGoal");
+if(goal){
+    SavingGoal = JSON.parse(goal);
+}
 let editid = null;
 let transactions = [];
+const data = localStorage.getItem("transactions");
+
+if(data){
+    transactions = JSON.parse(data);
+}
+updateBalancebtn();
+updateExpensebtn();
+updateIncomebtn();
+updateSavingbtn();
+renderTransaction();
 document.addEventListener('click', (event) => {
         if(detailsCard.contains(event.target)){
             return;
@@ -40,6 +54,7 @@ document.addEventListener('click', (event) => {
 AddTransactionbtn.addEventListener('click', ShowModal);
 balanceBtn.addEventListener('click', function(){
     ShowCard(1);
+    // updateBalancebtn();
     updatebalance();
 });
 incomebtn.addEventListener('click', function(){
@@ -57,6 +72,7 @@ savingbtn.addEventListener('click', function(){
 function ShowCard(a){
     
     if(a === 1){
+        detailsCard.className = "details-card balance-card";
         detailsCard.classList.add("active");
         detailsCard.innerHTML = `
         <h2>💰 Balance Details</h2>
@@ -78,6 +94,7 @@ function ShowCard(a){
         `;
     }
     else if(a === 2){
+        detailsCard.className = "details-card income-card";
         detailsCard.classList.add("active");
         detailsCard.innerHTML = `
         <h2>📈 Income Details</h2>
@@ -99,6 +116,7 @@ function ShowCard(a){
         `;
     }
     else if(a === 3){
+        detailsCard.className = "details-card expense-card";
         detailsCard.classList.add("active");
         detailsCard.innerHTML = `
         <h2>📉 Expense Details</h2>
@@ -120,6 +138,7 @@ function ShowCard(a){
         `;
     }
     else if(a === 4){
+        detailsCard.className = "details-card savings-card";
         detailsCard.classList.add("active");
         detailsCard.innerHTML = `
         <h2>💵 Savings Details</h2>
@@ -188,6 +207,8 @@ function saveTransaction(){
     };
     if(editid === null){
         transactions.push(transaction);
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+
     }
     else{
         transactions.forEach((transaction) => {
@@ -197,6 +218,7 @@ function saveTransaction(){
                transaction.type  = typeInput.value
                transaction.date = dateInput.value;
                transaction.description = descriptionInput.value
+               localStorage.setItem("transactions", JSON.stringify(transactions));
             }
         })
         editid = null;
@@ -219,8 +241,13 @@ function renderTransaction(){
      empty.style.display = "none";
      transactions.forEach((transaction) => {
         const card = document.createElement("div");
-        ca
-        rd.classList.add(("transaction-card"));
+        card.classList.add(("transaction-card"));
+        if(transaction.type === "Income"){
+           card.classList.add("income-transaction");
+        }
+        else{
+          card.classList.add("expense-transaction");
+        }
         card.innerHTML = `
         <div class="card-top">
            <div class="left">
@@ -250,7 +277,7 @@ function renderTransaction(){
         transactionHistory.appendChild(card);
      })
      updatebalance();
-
+     updatePieChart();
 }
 function editing (id){
     editid = id;
@@ -263,12 +290,15 @@ function editing (id){
               descriptionInput.value = transaction.description;
            }
     });
+    localStorage.setItem("transactions", JSON.stringify(transactions));
     modal.classList.add("active");
+
 }
 function deleteTrans(id){
     transactions = transactions.filter(function(transaction){
         return transaction.id !== id;
     });
+    localStorage.setItem("transactions", JSON.stringify(transactions));
 
     renderTransaction();
 }
@@ -401,11 +431,95 @@ function updateSaving(){
             </div>
         </div>
         `;
+        localStorage.setItem("transactions", JSON.stringify(transactions));
         const editGoalBtn = document.querySelector(".edit-goal");
         editGoalBtn.addEventListener('click', () => {
              console.log("clicked");
              SavingGoal = Number(prompt('enter your goal'));
              updateSaving();
+             localStorage.setItem("SavingGoal", JSON.stringify(SavingGoal));
        });
 
+}
+function updateBalancebtn(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currBalance = totalIncome - totalExpense;
+    balanceBtn.innerHTML = `
+    💰Balance<br/>
+    <strong>₹${currBalance}</strong>`
+}
+function updateExpensebtn(){
+   let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currExpense = totalExpense;  
+    expencebtn.innerHTML = `
+    📈Expense<br /><strong>₹${currExpense}</strong>` 
+}
+function updateIncomebtn(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currIncome = totalIncome;
+    incomebtn.innerHTML = `📈Income<br /><strong>₹${totalIncome}</strong>`
+}
+function updateSavingbtn(){
+    let  totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if(transaction.type === "Income"){
+            totalIncome += Number(transaction.amount);
+        }
+        else if(transaction.type === "Expense"){
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currSavings = totalIncome - totalExpense;
+    savingbtn.innerHTML = `💵Savings<br /><strong>₹${currSavings}</strong>`
+}
+function updatePieChart() {
+    console.log(myChart)
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    transactions.forEach((transaction) => {
+        if (transaction.type === "Income") {
+            totalIncome += Number(transaction.amount);
+        } else {
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currExpense = totalExpense;  
+    const currSavings = totalIncome - totalExpense;
+    const currIncome = totalIncome;
+    myChart.data.datasets[0].data = [
+        totalIncome,
+        totalExpense,
+        currSavings
+    ];
+
+    myChart.update();
 }

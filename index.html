@@ -14,9 +14,9 @@
     <section>
       <div class="components">
         <button class="Balance">💰Balance<br /><strong>₹0</strong></button>
-        <button class="Income">📈Income</button>
-        <button class="Expense">📈Expense</button>
-        <button class="Savings">💵Savings</button>
+        <button class="Income">📈Income<br /><strong>₹0</strong></button>
+        <button class="Expense">📈Expense<br /><strong>₹0</strong></button>
+        <button class="Savings">💵Savings<br /><strong>₹0</strong></button>
       </div>
     </section>
 
@@ -45,10 +45,21 @@
         </select>
       </div>
     </section>
-    <section calss="transactions">
-      <h2>Transaction History</h2>
+    <section class="analytics">
+      <h2>📊 Expense Analytics</h2>
+      <canvas id="myChart"></canvas>
+    </section>
+    <section class="transactions">
+      <h2 style="color: aliceblue;">Transaction History</h2>
       <div class="transaction-history"></div>
-      <div class="empty">No Transactions Yet 💸</div>
+      <div class="empty">        📂</br><br>
+
+                            No Transactions Yet</br>
+                                        <br>
+                           Start by adding your first transaction.<br><br>
+
+                          [+ Add Transaction]
+      </div>
     </section>
 
     <section class="details-card"></section>
@@ -76,14 +87,15 @@
           <option value="Healthcare">🏥HEALTHCARE</option>
           <option value="Salary">💼SALARY</option>
         </select>
-        <input type="date" class="date" />
+        <input type="date" class="date"/>
         <input type="text" placeholder="Description" class="discription" />
 
         <button class="save-btn">Save</button>
       </div>
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="chart.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
