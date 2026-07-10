@@ -825,9 +825,10 @@ header{
     || PIE CHART ||
 ====================== */
 .analytics{
-    width: 450px;
+    width: 90%;
     margin: 30px auto;
     background: #141c2e;
+    gap: 300px;
     padding: 20px;
     border-radius: 20px;
 }
@@ -835,4 +836,288 @@ header{
 #myChart{
     width: 100% !important;
     height: 350px !important;
+}
+.analytics{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+
+    margin:30px;
+    padding:25px;
+
+    background:#141c2e;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+}
+
+.chartBox{
+    flex:2;
+}
+
+#myChart{
+    width:100% !important;
+    height:350px !important;
+}
+
+.summarycard{
+    flex:1;
+    min-width:300px;
+    min-height:350px;
+
+    padding:24px;
+    border-radius:20px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(59,130,246,.15),
+        rgba(15,23,42,.95)
+    );
+
+    border:1px solid rgba(59,130,246,.35);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.35),
+        0 0 18px rgba(59,130,246,.20);
+
+    transition:.35s;
+}
+
+.summarycard:hover{
+    transform:translateY(-5px);
+}
+ /* .chart-empty{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:320px;
+    color:#94A3B8;
+    font-size:18px;
+    border:2px dashed #334155;
+    border-radius:15px;
+    background:#0F172A;
+    text-align:center;
+}  */
+.chart-empty{
+    display:none;   /* Important */
+    justify-content:center;
+    align-items:center;
+    height:320px;
+    color:white;
+    text-align:center;
+}
+
+#myChart{
+    width:100%;
+    height:320px;
+}
+/* =========================
+     || SUMMARY CARD ||
+========================= */
+.summarycard{
+    min-height:260px;
+    padding:24px;
+    border-radius:20px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(59,130,246,.15),
+        rgba(15,23,42,.95)
+    );
+
+    border:1px solid rgba(59,130,246,.35);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.35),
+        0 0 18px rgba(59,130,246,.20);
+
+    transition:.35s ease;
+}
+
+.summarycard:hover{
+    transform:translateY(-6px);
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.45),
+        0 0 30px rgba(59,130,246,.45);
+}
+
+.summarycard h2{
+    color:#60A5FA;
+    font-size:22px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.summarycard .item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.summarycard .item:last-child{
+    border-bottom:none;
+}
+
+.summarycard .item span{
+    color:#CBD5E1;
+    font-size:15px;
+}
+
+.summarycard .item strong{
+    color:#fff;
+    font-size:18px;
+}
+/* ===========================
+   || BUDGET SECTION ||
+=========================== */
+
+/* =========================
+        LIGHT THEME
+========================= */
+
+body.light-theme{
+    background:#F4F7FB;
+    color:#1E293B;
+}
+
+/* Header */
+
+body.light-theme header{
+    background:#FFFFFF;
+    border-bottom:1px solid #E2E8F0;
+}
+
+body.light-theme .logo-name{
+    color:#2563EB;
+}
+
+/* Top Cards */
+
+body.light-theme .Balance,
+body.light-theme .Income,
+body.light-theme .Expense,
+body.light-theme .Savings{
+    background:#FFFFFF;
+    color:#1E293B;
+    border:1px solid #D1D5DB;
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+body.light-theme .Balance strong,
+body.light-theme .Income strong,
+body.light-theme .Expense strong,
+body.light-theme .Savings strong{
+    color:#2563EB;
+}
+
+/* Buttons */
+
+body.light-theme .Add-Transaction{
+    background:#2563EB;
+    color:#fff;
+}
+
+body.light-theme .Add-Transaction:hover{
+    background:#1D4ED8;
+}
+
+/* Search */
+
+body.light-theme .search input,
+body.light-theme .filter,
+body.light-theme .sort{
+    background:#fff;
+    color:#1E293B;
+    border:1px solid #CBD5E1;
+}
+
+/* Analytics */
+
+body.light-theme .analytics{
+    background:#FFFFFF;
+    border:1px solid #E2E8F0;
+}
+
+body.light-theme .analytics h2{
+    color:#2563EB;
+}
+
+/* Transactions */
+
+body.light-theme .transactions{
+    background:#FFFFFF;
+    border:1px solid #E2E8F0;
+}
+
+body.light-theme .transactions h2{
+    color:#2563EB !important;
+}
+
+/* Empty State */
+
+body.light-theme .empty,
+body.light-theme .chart-empty{
+    background:#F8FAFC;
+    color:#64748B;
+    border:2px dashed #CBD5E1;
+}
+
+/* Transaction Cards */
+
+body.light-theme .transaction-card{
+    background:#F8FAFC;
+    color:#1E293B;
+    border:1px solid #CBD5E1;
+}
+
+body.light-theme .card-bottom span,
+body.light-theme .left p{
+    color:#64748B;
+}
+
+/* Detail Cards */
+
+body.light-theme .details-card{
+    background:#FFFFFF;
+    color:#1E293B;
+}
+
+/* Summary Card */
+
+body.light-theme .summarycard{
+    background:#FFFFFF;
+    border:1px solid #CBD5E1;
+}
+
+body.light-theme .summarycard h2{
+    color:#2563EB;
+}
+
+body.light-theme .summarycard .item span{
+    color:#475569;
+}
+
+body.light-theme .summarycard .item strong{
+    color:#0F172A;
+}
+
+/* Modal */
+
+body.light-theme .modal-content{
+    background:#FFFFFF;
+    color:#1E293B;
+}
+
+body.light-theme .modal-content input,
+body.light-theme .modal-content select{
+    background:#F8FAFC;
+    color:#1E293B;
+    border:1px solid #CBD5E1;
+}
+
+body.light-theme .close-btn{
+    color:#1E293B;
 }

@@ -14,8 +14,27 @@ const descriptionInput = document.querySelector(".discription");
 const saveBtn = document.querySelector(".save-btn");
 const transactionHistory = document.querySelector(".transaction-history");
 const empty = document.querySelector(".empty");
+const chartEmpty = document.querySelector(".chart-empty");
+const chartCanvas = document.getElementById("myChart");
+const summary = document.querySelector(".summarycard");
+const search = document.querySelector(".search input");
+search.addEventListener("input", searching);
+const sort = document.querySelector(".sort");
+sort.addEventListener("change", sorting);
+const themeBtn = document.querySelector(".theme");
+let btn = themeBtn.addEventListener('click', () =>{
+    document.body.classList.toggle("light-theme");
+    if(document.body.classList.contains("light-theme")){
+        themeBtn.innerHTML = `☀️`
+    }
+    else{
+        themeBtn.innerHTML = `🌙`
+    }
+});
 let SavingGoal = 0;
 const goal = localStorage.getItem("SavingGoal");
+const filters = document.querySelector(".filter");
+filters.addEventListener("change", filtering);
 if(goal){
     SavingGoal = JSON.parse(goal);
 }
@@ -26,10 +45,13 @@ const data = localStorage.getItem("transactions");
 if(data){
     transactions = JSON.parse(data);
 }
+console.log(chartEmpty);
 updateBalancebtn();
 updateExpensebtn();
 updateIncomebtn();
 updateSavingbtn();
+updateSummary();
+searching();
 renderTransaction();
 document.addEventListener('click', (event) => {
         if(detailsCard.contains(event.target)){
@@ -232,14 +254,15 @@ function saveTransaction(){
     modal.classList.remove("active"); 
     
 }
-function renderTransaction(){
+function renderTransaction(data = transactions){
       transactionHistory.innerHTML = "";
-      if(transactions.length === 0){
+      if(data.length === 0){
         empty.style.display = "flex";
-        return;
+
       }
-     empty.style.display = "none";
-     transactions.forEach((transaction) => {
+    else{
+        empty.style.display = "none";
+       data.forEach((transaction) => {
         const card = document.createElement("div");
         card.classList.add(("transaction-card"));
         if(transaction.type === "Income"){
@@ -276,6 +299,7 @@ function renderTransaction(){
         });
         transactionHistory.appendChild(card);
      })
+     }
      updatebalance();
      updatePieChart();
 }
@@ -501,7 +525,7 @@ function updateSavingbtn(){
     savingbtn.innerHTML = `💵Savings<br /><strong>₹${currSavings}</strong>`
 }
 function updatePieChart() {
-    console.log(myChart)
+    console.log("myChart")
     let totalIncome = 0;
     let totalExpense = 0;
 
@@ -515,6 +539,13 @@ function updatePieChart() {
     const currExpense = totalExpense;  
     const currSavings = totalIncome - totalExpense;
     const currIncome = totalIncome;
+     if(transactions.length === 0){
+        document.getElementById("myChart").style.display = "none";
+        chartEmpty.style.display = "flex";
+        return;
+    }
+    chartEmpty.style.display = "none";
+    document.getElementById("myChart").style.display = "block";
     myChart.data.datasets[0].data = [
         totalIncome,
         totalExpense,
@@ -522,4 +553,98 @@ function updatePieChart() {
     ];
 
     myChart.update();
+}
+function updateSummary(){
+    console.log("myChart")
+    let totalIncome = 0;
+    let totalExpense = 0;
+    const Transactions = transactions.length;
+    transactions.forEach((transaction) => {
+        if (transaction.type === "Income") {
+            totalIncome += Number(transaction.amount);
+
+        } else {
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currExpense = totalExpense;  
+    const currSavings = totalIncome - totalExpense;
+    const currIncome = totalIncome;
+    summary.innerHTML = `
+     <h2>📋 Summary</h2>
+
+        <div class="item">
+            <span>Total Transactions</span>
+            <strong>${Transactions}</strong>
+        </div>
+
+        <div class="item">
+            <span>Total Income</span>
+            <strong>₹0${currIncome}</strong>
+        </div>
+
+        <div class="item">
+            <span>Total Expense</span>
+            <strong>₹${currExpense}</strong>
+        </div>
+
+        <div class="item">
+            <span>Total Savings</span>
+            <strong>₹${currSavings}</strong>
+        </div>
+    </div>
+    `;
+}
+function searching(){
+    const Inputvalue = search.value.toLowerCase().trim();
+    const compareVal = categoryInput.value;
+    if(Inputvalue === ""){
+       renderTransaction();
+       return;
+    }
+    const filtered = transactions.filter((transaction) => {
+        
+            return transaction.category.toLowerCase().includes(Inputvalue);
+
+    });
+    renderTransaction(filtered);
+    
+}
+function sorting(){
+    const sorted = [...transactions];
+    const selectval = sort.value;
+    if(selectval === "newest"){
+        sorted.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+        })
+    }else if(selectval === "oldest"){
+        sorted.sort((a,b) => {
+            return new Date(a.date) - new Date(b.date);
+        })
+    }
+    else if(selectval === "highest"){
+        sorted.sort((a,b) => {
+            return b.amount - a.amount;
+        });
+    }
+    else if(selectval === "lowest"){
+        sorted.sort((a, b) => {
+            return a.amount - b.amount;
+        })
+    }
+
+    renderTransaction(sorted);
+}
+function filtering(){
+    const userfilter = filters.value
+
+    if(userfilter === "Filter"){
+        renderTransaction();
+        return;
+    }
+    const slelected = transactions.filter((transaction) => {
+        return transaction.category === userfilter;
+    });
+    
+    renderTransaction(slelected);
 }

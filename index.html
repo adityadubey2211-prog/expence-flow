@@ -24,7 +24,7 @@
       <div class="functions">
         <button class="Add-Transaction">+ Add Transaction</button>
         <div class="search">
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Search" class="search input"/>
           <button class="s-icon">🔍</button>
         </div>
         <select class="filter">
@@ -45,10 +45,52 @@
         </select>
       </div>
     </section>
-    <section class="analytics">
-      <h2>📊 Expense Analytics</h2>
-      <canvas id="myChart"></canvas>
-    </section>
+   <section class="analytics">
+
+    <div class="chartBox">
+        <h2>📊 Expense Analytics</h2>
+
+        <div class="chart-empty">
+            📊<br><br>
+            No analytics available yet.
+        </div>
+
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <div class="summarycard">
+        <h2>📋 Summary</h2>
+
+        <div class="item">
+            <span>Total Transactions</span>
+            <strong>0</strong>
+        </div>
+
+        <div class="item">
+            <span>Total Income</span>
+            <strong>₹0</strong>
+        </div>
+
+        <div class="item">
+            <span>Total Expense</span>
+            <strong>₹0</strong>
+        </div>
+
+        <div class="item">
+            <span>Total Savings</span>
+            <strong>₹0</strong>
+        </div>
+    </div>
+
+</section>
+    <!-- <section class="miniSummary">
+       <div class="summarycard">
+           <b>Total Income :</b>₹0
+           <b>Total Expense :</b>₹0
+           <b>Savings :</b>₹0
+           <b>Goal Progress</b>
+       </div>
+    </section> -->
     <section class="transactions">
       <h2 style="color: aliceblue;">Transaction History</h2>
       <div class="transaction-history"></div>
@@ -93,6 +135,20 @@
         <button class="save-btn">Save</button>
       </div>
     </div>
+
+    <section class="Buget">
+       <div class="parent">
+        <div class="buget">
+         <h2>💰 Monthly Budget</h2>
+         <p class="content">Budget : 20,000</p>
+         <p class="content">Spent : ₹22,300</p>
+         <p class="content">Exceeded By : ₹2,300</p>
+         <div class="container">
+           <div class="bar"></div>
+         </div>
+       </div>
+       </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="chart.js"></script>

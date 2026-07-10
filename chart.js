@@ -6,7 +6,7 @@ window.myChart = new Chart(ctx, {
     data: {
         labels: ["Income", "Expense", "Savings"],
         datasets: [{
-            data: [50, 30, 20],
+            data: [0, 0, 0],
             backgroundColor: [
                 "#22C55E",
                 "#EF4444",
