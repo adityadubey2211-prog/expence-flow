@@ -1,3 +1,4 @@
+
 const balanceBtn = document.querySelector(".Balance");
 const detailsCard = document.querySelector(".details-card");
 const modal = document.querySelector(".modal");
@@ -22,6 +23,17 @@ search.addEventListener("input", searching);
 const sort = document.querySelector(".sort");
 sort.addEventListener("change", sorting);
 const themeBtn = document.querySelector(".theme");
+const budget = document.querySelector("#budget");
+const spent = document.querySelector("#spent");
+const exceed = document.querySelector("#exceed");
+const BudgetBtn = document.querySelector(".set-budget");
+const modal2 = document.querySelector(".modal2");
+const BudgetInput = document.querySelector(".budget-input");
+const bar = document.querySelector(".bar");
+let Abs = 0;
+BudgetBtn.addEventListener('click', ()=>{
+    modal2.classList.add("active");
+});
 let btn = themeBtn.addEventListener('click', () =>{
     document.body.classList.toggle("light-theme");
     if(document.body.classList.contains("light-theme")){
@@ -31,6 +43,19 @@ let btn = themeBtn.addEventListener('click', () =>{
         themeBtn.innerHTML = `🌙`
     }
 });
+const enterbtn = document.querySelector(".update");
+enterbtn.addEventListener('click', () => {
+    Abs = Number(BudgetInput.value);
+    budget.innerHTML = `Budget : <strong>${Abs}</strong>`
+    modal2.classList.remove("active");
+    localStorage.setItem("Abs", JSON.stringify(Abs));
+});
+const result = localStorage.getItem("Abs");
+if(result){
+   Abs = JSON.parse(result);
+   budget.innerHTML = `Budget : <strong>${Abs}</strong>`
+}
+
 let SavingGoal = 0;
 const goal = localStorage.getItem("SavingGoal");
 const filters = document.querySelector(".filter");
@@ -46,12 +71,15 @@ if(data){
     transactions = JSON.parse(data);
 }
 console.log(chartEmpty);
-updateBalancebtn();
-updateExpensebtn();
-updateIncomebtn();
-updateSavingbtn();
-updateSummary();
-searching();
+function updateAll(){
+    updateBalancebtn();
+   updateExpensebtn();
+   updateIncomebtn();
+   updateSavingbtn();
+   updateSummary();
+   updatesummary();
+   searching();
+}
 renderTransaction();
 document.addEventListener('click', (event) => {
         if(detailsCard.contains(event.target)){
@@ -251,6 +279,7 @@ function saveTransaction(){
     dateInput.value = "";
     descriptionInput.value = "";
     renderTransaction();
+    updateAll();
     modal.classList.remove("active"); 
     
 }
@@ -325,6 +354,7 @@ function deleteTrans(id){
     localStorage.setItem("transactions", JSON.stringify(transactions));
 
     renderTransaction();
+    updateAll();
 }
 function updatebalance(){
     let  totalIncome = 0;
@@ -647,4 +677,42 @@ function filtering(){
     });
     
     renderTransaction(slelected);
+}
+function updatesummary(){
+    let totalIncome = 0;
+    let totalExpense = 0;
+    transactions.forEach((transaction) => {
+        if (transaction.type === "Income") {
+            totalIncome += Number(transaction.amount);
+
+        } else {
+            totalExpense += Number(transaction.amount);
+        }
+    });
+    const currExpense = totalExpense;  
+    const currBalance = totalIncome - totalExpense;
+    spent.innerHTML = `Spent : <strong>₹${currExpense}</strong>`
+    if(currBalance < 0){
+        const extra = -1*currBalance;
+        exceed.innerHTML = `Exceeded By : <strong>₹${extra}</strong>`
+    }
+    const currSavings = totalIncome - totalExpense;
+    const rate = (currSavings/totalIncome) * 100;
+    if(totalIncome <= 0 ){
+        bar.style.width = `0%`;
+    }
+    if(rate > 0){
+           if(rate < 30 && rate > 0){
+             bar.style.backgroundColor = "red"
+            bar.style.width = `${rate}%`;
+           }
+       else if(rate < 70){
+          bar.style.backgroundColor = "yellow";
+          bar.style.width = `${rate}%`;
+        }
+      else{
+          bar.style.backgroundColor = "green";
+          bar.style.width = `${rate}%`;
+        }
+    }
 }

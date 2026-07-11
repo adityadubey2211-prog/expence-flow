@@ -970,10 +970,134 @@ header{
     color:#fff;
     font-size:18px;
 }
-/* ===========================
-   || BUDGET SECTION ||
-=========================== */
+/* ==========================
+        Budget Card
+========================== */
 
+.Buget{
+    width:90%;
+    margin:35px auto;
+}
+
+.buget{
+    background:#141c2e;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.35),
+        0 0 18px rgba(34,197,94,.15);
+
+    transition:.35s ease;
+}
+
+.buget:hover{
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.45),
+        0 0 25px rgba(34,197,94,.35);
+}
+
+.buget h2{
+    color:#22C55E;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+/* Budget Details */
+
+.content{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:10px 0;
+
+    color:#CBD5E1;
+    font-size:17px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.content:last-of-type{
+    border-bottom:none;
+    margin-bottom:20px;
+}
+
+/* Progress Bar */
+
+.container{
+    width:100%;
+    height:18px;
+
+    background:#334155;
+
+    border-radius:30px;
+
+    overflow:hidden;
+}
+
+.bar{
+    width:45%;        /* JS se change hogi */
+
+    height:100%;
+
+    border-radius:30px;
+
+    /* background:linear-gradient(
+        90deg,
+        #22C55E,
+        #16A34A
+    ); */
+
+    transition:.4s ease;
+}
+.set-budget{
+    width:100%;
+
+    margin-top:20px;
+    padding:14px 18px;
+
+    border:none;
+    outline:none;
+    cursor:pointer;
+
+    border-radius:12px;
+
+    font-size:16px;
+    font-weight:600;
+
+    color:#010101;
+
+    background:linear-gradient(
+        135deg,
+        #22C55E,
+        #16A34A
+    );
+
+    box-shadow:
+        0 8px 20px rgba(34,197,94,.25);
+
+    transition:all .3s ease;
+}
+
+.set-budget:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(34,197,94,.45);
+}
+
+.set-budget:active{
+    transform:scale(.97);
+}
+
+.set-budget:focus{
+    outline:2px solid rgba(34,197,94,.45);
+}
 /* =========================
         LIGHT THEME
 ========================= */
@@ -1120,4 +1244,264 @@ body.light-theme .modal-content select{
 
 body.light-theme .close-btn{
     color:#1E293B;
+}
+/* ===========================
+  || MODAL 2 ||
+=========================== */
+.modal2{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+
+    width:360px;
+    padding:30px;
+
+    background:#141C2E;
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.45);
+
+    display:none;
+
+    flex-direction:column;
+    gap:18px;
+
+    z-index:999;
+}
+
+.budget-input{
+    width:100%;
+    padding:14px;
+
+    border:none;
+    outline:none;
+
+    border-radius:12px;
+
+    background:#1E293B;
+    color:white;
+
+    font-size:16px;
+}
+
+.budget-input::placeholder{
+    color:#94A3B8;
+}
+.update{
+    width:100%;
+    padding:14px;
+
+    border:none;
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+    font-weight:600;
+
+    color:white;
+
+    background:linear-gradient(
+        135deg,
+        #22C55E,
+        #16A34A
+    );
+
+    transition:.3s;
+}
+
+.update:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 18px rgba(34,197,94,.4);
+}
+.modal2.active{
+    display: flex;
+}
+/* ===========================
+      RESPONSIVE DESIGN
+=========================== */
+
+/* Tablet */
+@media (max-width:1024px){
+
+    header{
+        margin:20px;
+    }
+
+    .components{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:18px;
+        margin:20px;
+    }
+
+    .functions{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    .analytics{
+        flex-direction:column;
+    }
+
+    .summarycard{
+        width:100%;
+        min-width:unset;
+    }
+
+    .Buget{
+        width:95%;
+    }
+}
+
+/* Mobile */
+@media (max-width:768px){
+
+    body{
+        padding:10px;
+    }
+
+    header{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+        margin:10px;
+    }
+
+    .logo-name{
+        font-size:24px;
+    }
+
+    .theme{
+        font-size:32px;
+    }
+
+    .components{
+        grid-template-columns:1fr;
+        margin:10px;
+    }
+
+    .Balance,
+    .Income,
+    .Expense,
+    .Savings{
+        height:70px;
+    }
+
+    .functions{
+        flex-direction:column;
+        margin:15px 10px;
+    }
+
+    .Add-Transaction,
+    .search,
+    .sort,
+    .filter{
+        width:100%;
+    }
+
+    .analytics{
+        margin:10px;
+        padding:15px;
+    }
+
+    #myChart{
+        height:260px !important;
+    }
+
+    .transactions{
+        margin:10px;
+        padding:15px;
+    }
+
+    .card-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .card-bottom{
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .card-actions{
+        justify-content:space-between;
+    }
+
+    .details-card{
+        width:90%;
+        right:5%;
+        left:5%;
+    }
+
+    .modal-content{
+        width:90%;
+        padding:20px;
+    }
+
+    .modal2{
+        width:90%;
+    }
+
+    .summarycard{
+        padding:18px;
+    }
+
+    .buget{
+        padding:18px;
+    }
+
+    .content{
+        font-size:15px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width:480px){
+
+    .logo-name{
+        font-size:20px;
+    }
+
+    .theme{
+        font-size:28px;
+    }
+
+    .transactions h2,
+    .analytics h2,
+    .summarycard h2,
+    .buget h2{
+        font-size:20px;
+    }
+
+    .left h1{
+        font-size:18px;
+    }
+
+    .right h2{
+        font-size:20px;
+    }
+
+    .content{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+    }
+
+    #myChart{
+        height:220px !important;
+    }
+
+    .save-btn,
+    .update,
+    .set-budget{
+        font-size:15px;
+        padding:12px;
+    }
 }

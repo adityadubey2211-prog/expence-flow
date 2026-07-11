@@ -135,19 +135,25 @@
         <button class="save-btn">Save</button>
       </div>
     </div>
-
+     <button class="set-budget">Click me to set a <b>BUDGET</b></button>
     <section class="Buget">
-       <div class="parent">
         <div class="buget">
-         <h2>💰 Monthly Budget</h2>
-         <p class="content">Budget : 20,000</p>
-         <p class="content">Spent : ₹22,300</p>
-         <p class="content">Exceeded By : ₹2,300</p>
-         <div class="container">
-           <div class="bar"></div>
-         </div>
+           <h2>💰 Monthly Budget</h2>
+           <p class="content" id="budget">Budget : <strong>₹0</strong> </p>
+           <p class="content" id="spent">Spent : <strong>₹0</strong></p>
+           <p class="content" id="exceed">Exceeded By : <strong>₹0</strong></p>
+           <b style="color: aliceblue;">Saving Rate</b>
+           <div class="container">
+             <div class="bar"></div>
+           </div>
        </div>
-       </div>
+    </section>
+    <section>
+      <div class="modal2">
+        <h2>💰 Set Monthly Budget</h2>
+        <input type="number" placeholder="ENTER YOUR BUDGET" class="budget-input">
+        <button class="update">ENTER</button>
+      </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
